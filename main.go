@@ -14,6 +14,7 @@ import (
 )
 
 type library struct {
+	dbHost  string
 	dbPass  string
 	dbName  string
 	apiPath string
@@ -26,6 +27,10 @@ type Book struct {
 }
 
 func main() {
+	dbHost := os.Getenv("DB_HOST")
+	if dbHost == "" {
+		dbHost = "localhost:3306"
+	}
 
 	dbPass := os.Getenv("DB_PASS")
 	if dbPass == "" {
@@ -43,6 +48,7 @@ func main() {
 	}
 
 	l := library{
+		dbHost:  dbHost,
 		dbPass:  dbPass,
 		dbName:  dbName,
 		apiPath: apiPath,
@@ -90,7 +96,7 @@ func (l *library) getBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (l *library) newConnection() (*sql.DB, error) {
-	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@/%s", "root", l.dbPass, l.dbName))
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s", "root", l.dbPass, l.dbHost, l.dbName))
 	if err != nil {
 		return nil, err
 	}

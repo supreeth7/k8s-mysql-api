@@ -9,7 +9,8 @@
 *.test
 
 k8s-mysql-api
-secret.yaml
+mysql-secret.yaml
+api-secret.yaml
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
