@@ -14,7 +14,6 @@ import (
 )
 
 type library struct {
-	dbHost  string
 	dbPass  string
 	dbName  string
 	apiPath string
@@ -27,10 +26,6 @@ type Book struct {
 }
 
 func main() {
-	dbHost := os.Getenv("DB_HOST")
-	if dbHost == "" {
-		dbHost = "localhost:3306"
-	}
 
 	dbPass := os.Getenv("DB_PASS")
 	if dbPass == "" {
@@ -48,7 +43,6 @@ func main() {
 	}
 
 	l := library{
-		dbHost:  dbHost,
 		dbPass:  dbPass,
 		dbName:  dbName,
 		apiPath: apiPath,
